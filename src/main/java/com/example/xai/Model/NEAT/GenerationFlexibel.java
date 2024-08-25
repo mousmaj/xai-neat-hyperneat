@@ -10,11 +10,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.nio.file.Paths;
-import java.math.RoundingMode;
 
 import com.example.xai.Model.HyperNEAT.GenomeFromSubstrate;
 import com.example.xai.Model.ImageHandling.ImageAndAnswer;

@@ -2,15 +2,11 @@ package com.example.xai.Controller;
 
 import com.example.xai.View.PDFViewerView;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.web.WebView;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class PDFViewerController {
@@ -23,7 +19,7 @@ public class PDFViewerController {
         if (filePath.toString().toLowerCase().endsWith(".pdf")) {
             showPDF(filePath);
         } else if (filePath.toString().toLowerCase().endsWith(".md")) {
-            showMarkdown(filePath);
+            // deleted, cause of trouble with import
         } else {
             throw new IllegalArgumentException("Unsupported file format. Only .pdf and .md are supported.");
         }
@@ -55,18 +51,4 @@ public class PDFViewerController {
         }
     }
 
-    private void showMarkdown(Path markdownFile) throws IOException {
-        String markdownContent = Files.readString(markdownFile);
-
-        // Markdown in HTML konvertieren
-        Parser parser = Parser.builder().build();
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        String htmlContent = renderer.render(parser.parse(markdownContent));
-
-        // HTML im WebView anzeigen
-        WebView markdownView = view.getMarkdownView();
-        markdownView.getEngine().loadContent(htmlContent);
-
-        view.displayMarkdown();
-    }
 }

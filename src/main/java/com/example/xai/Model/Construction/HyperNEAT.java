@@ -42,7 +42,7 @@ public class HyperNEAT {
     public HyperNEAT(int initialPopulationSize, int generations) {
         this.innovationsTracker.init(4, 1);
         try {
-            this.imageAnswerCollection = MnistSubsetLoader.loadMnistSubset(500);
+            this.imageAnswerCollection = MnistSubsetLoader.loadMnistSubset("t10k-images.idx3-ubyte", "t10k-labels.idx1-ubyte", 1000);
         } catch (IOException e) {
             e.printStackTrace();
         }

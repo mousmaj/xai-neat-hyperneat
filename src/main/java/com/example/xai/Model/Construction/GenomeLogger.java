@@ -20,7 +20,7 @@ public class GenomeLogger {
     }
 
     public void logBirth(int generation) {
-        String log = String.format("Generation-%d: Ein neues Individuum wurde in dieser Generation geboren (Genotyp erstellt). (REPRODUKTION 3)", generation);
+        String log = String.format("Generation-%d: Ein neues Individuum wurde in dieser Generation geboren (Genotyp erstellt). (REPRODUKTION)", generation);
         addLog(log);
     }
 

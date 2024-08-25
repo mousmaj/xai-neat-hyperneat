@@ -44,7 +44,7 @@ public class NEAT {
     public NEAT(int initialPopulationSize, int generations) {
         this.OUTPUT = 10; // Für MNIST sind es immer 10 Klassen (Ziffern 0-9)
         try {
-            this.imageAnswerCollection = MnistSubsetLoader.loadMnistSubset(500);
+            this.imageAnswerCollection = MnistSubsetLoader.loadMnistSubset("t10k-images.idx3-ubyte", "t10k-labels.idx1-ubyte", 1000);
         } catch (IOException e) {
             e.printStackTrace();
         }

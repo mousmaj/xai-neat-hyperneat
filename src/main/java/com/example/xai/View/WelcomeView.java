@@ -1,7 +1,7 @@
 package com.example.xai.View;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+//import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -10,11 +10,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+//import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 import java.awt.Desktop;
 import java.net.URI;
+import java.util.Objects;
 
 public class WelcomeView {
     private VBox root;
@@ -22,20 +23,20 @@ public class WelcomeView {
     public WelcomeView() {
         root = new VBox(30);
         root.setPadding(new Insets(50));
-        root.setAlignment(Pos.CENTER);
+        //root.setAlignment(Pos.CENTER);
         root.setMinWidth(600);
         root.setStyle("-fx-background-color: #f4f4f4;");  // Heller Hintergrund für eine moderne Optik
 
         // Überschrift
         Label infoTitleLabel = new Label("Willkommen zu \nxAI - NEAT & HyperNEAT");
         infoTitleLabel.setTextAlignment(TextAlignment.CENTER);
-        infoTitleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 28));
+        //infoTitleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 28));
         infoTitleLabel.setTextFill(Color.web("#2c3e50"));
 
         // Bild laden und anzeigen
         ImageView imageView = new ImageView();
-        //Image logoImage = new Image(getClass().getResourceAsStream("/com/example/xai/images/images/Frame 7.png")); // Bild aus dem Ressourcenordner laden
-        //imageView.setImage(logoImage);
+        Image logoImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/xai/images/Frame 7.png"))); // Bild aus dem Ressourcenordner laden
+        imageView.setImage(logoImage);
         imageView.setFitWidth(350);
         imageView.setPreserveRatio(true);
         imageView.setEffect(new DropShadow(10, Color.gray(0.4)));
@@ -54,7 +55,7 @@ public class WelcomeView {
 
         // Hyperlink-Label
         Label tutorialLinkLabel = new Label("Bitte Tutorial anschauen: https://youtu.be/Hl9m5cTZ1Jg");
-        tutorialLinkLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        //tutorialLinkLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         tutorialLinkLabel.setTextFill(Color.web("#2980b9"));  // Blaue Farbe für den Hyperlink
         tutorialLinkLabel.setUnderline(true);
         tutorialLinkLabel.setOnMouseClicked(event -> {

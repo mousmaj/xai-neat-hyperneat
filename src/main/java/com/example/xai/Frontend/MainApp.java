@@ -1,7 +1,9 @@
 package com.example.xai.Frontend;
 
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -71,8 +73,8 @@ public class MainApp extends Application {
 
     private void showWelcomeView() {
         TabPane tabPane = new TabPane();
-        tabPane.setTabMinHeight(40);  // Mindesthöhe der Tabs
-        tabPane.setTabMaxHeight(60);  // Maximalhöhe der Tabs
+        tabPane.setTabMinHeight(40);  
+        tabPane.setTabMaxHeight(60);  
         WelcomeView welcomeView = new WelcomeView();
         Tab welcomeTab = new Tab("Willkommen", welcomeView.getRoot());
         welcomeTab.setStyle("-fx-font-size: 25px; -fx-border-color: #4B575A; -fx-border-width: 1px; -fx-border-radius: 3px;");
@@ -139,17 +141,25 @@ public class MainApp extends Application {
 
     private Tab createAndAddTab(TabPane tabPane, ExplanationType type) {
         String typeName = type.name().substring(0, 1).toUpperCase() + type.name().substring(1).toLowerCase(); // z.B. "Mutation"
+        System.out.println("Erstelle Tab: " + typeName);  // Log-Ausgabe für Debugging
         String fileName = "/com/example/xai/ExplainPDFs/" + typeName + ".pdf";
         URL fileUrl = getClass().getResource(fileName);
 
         Tab tab = new Tab(typeName); // Tab-Überschrift setzen
-    
+
         try {
-            PDFViewerView viewerView = new PDFViewerView(0.9);
-            PDFViewerController controller = new PDFViewerController(viewerView, Path.of(fileUrl.toURI()));
-            tab.setContent(viewerView.getPdfViewPane());
-            pdfControllers.add(controller);
-        } catch (IOException | URISyntaxException e) {
+            assert fileUrl != null;
+            try (InputStream pdfStream = fileUrl.openStream()) {
+                // Temporäre Datei erstellen und den Inhalt des Streams dort speichern
+                Path tempFile = Files.createTempFile(typeName, ".pdf");
+                Files.copy(pdfStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+
+                PDFViewerView viewerView = new PDFViewerView(0.9);
+                PDFViewerController controller = new PDFViewerController(viewerView, tempFile);  // Verwende den Path zur temporären Datei
+                tab.setContent(viewerView.getPdfViewPane());
+                pdfControllers.add(controller);
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
         tab.setStyle("-fx-font-size: 25px; -fx-border-color: #4B575A; -fx-border-width: 1px; -fx-border-radius: 3px;");
@@ -158,6 +168,7 @@ public class MainApp extends Application {
         tabPane.getTabs().add(tab);
         return tab;
     }
+
 
     private void closeAllPDFDocuments() {
         for (PDFViewerController controller : pdfControllers) {
